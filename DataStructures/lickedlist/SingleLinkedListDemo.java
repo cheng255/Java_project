@@ -1,5 +1,7 @@
 package com.atguigu.lickedlist;
 
+import java.util.Stack;
+
 /*
  * 单链表的应用实例
  * 
@@ -15,19 +17,23 @@ public class SingleLinkedListDemo {
 		//测试
 		//先创建节点
 		HeroNode hero1 = new HeroNode(1, "宋江", "及时雨");
-		HeroNode hero2 = new HeroNode(2, "卢俊义", "玉麒麟");
-		HeroNode hero3 = new HeroNode(3, "吴用", "智多星");
-		HeroNode hero4 = new HeroNode(4, "林冲", "豹子头");
+		HeroNode hero2 = new HeroNode(4, "卢俊义", "玉麒麟");
+		HeroNode hero3 = new HeroNode(5, "吴用", "智多星");
+		HeroNode hero4 = new HeroNode(7, "林冲", "豹子头");
+		HeroNode hero5 = new HeroNode(8, "杨雄", "拼命三郎");
+		HeroNode hero6 = new HeroNode(2, "鲁智深", "花和尚");
+		HeroNode hero7 = new HeroNode(3, "孙悟空", "斗战胜佛");
+		HeroNode hero8 = new HeroNode(6, "沙和尚", "卷帘大将");
 		
 		// 创建一个链表
 		SingleLinkedList singleLinkedList = new SingleLinkedList();
-		//添加
+		//A添加
 //		singleLinkedList.add(hero1);
 //		singleLinkedList.add(hero2);
 //		singleLinkedList.add(hero3);
 //		singleLinkedList.add(hero4);
 
-		//按照编号顺序添加
+		//B按照编号顺序添加
 		
 		singleLinkedList.addByOrder(hero3);
 		singleLinkedList.addByOrder(hero1);
@@ -35,31 +41,57 @@ public class SingleLinkedListDemo {
 		singleLinkedList.addByOrder(hero2);
 		
 //		显示
+		System.out.println("原始单链表");
 		singleLinkedList.show();
 		
+	
+		// 创建一个新链表
+		SingleLinkedList singleLinkedList1 = new SingleLinkedList();
+		//B按照编号顺序添加
 		
-		//测试修改节点的代码
-		HeroNode newHeroNode = new HeroNode(2, "哈哈", "haha");
-		singleLinkedList.update(newHeroNode);
-		System.out.println("修改后的！");
-		singleLinkedList.show();
+		singleLinkedList1.addByOrder(hero5);
+		singleLinkedList1.addByOrder(hero6);
+		singleLinkedList1.addByOrder(hero7);
+		singleLinkedList1.addByOrder(hero8);
+		System.out.println("新单链表");
+		singleLinkedList1.show();
 		
+		//测试合并两个单链表(不会)
+//		HeroNode res = merge(singleLinkedList.getHead(),singleLinkedList1.getHead());
+//		System.out.println("合并后");
+//		while(res.next != null) {
+//			System.out.println(res.next.toString());
+//			res = res.next;
+//		}
 		
-		//测试删除节点的代码
-		singleLinkedList.delete(2);
-		System.out.println("删除后的！");
-		singleLinkedList.show();
-		
-
-		//测试求单链表中有效节点的个数
-		System.out.println(getLength(singleLinkedList.getHead()));
-		
-		//测试是否得到倒数第k个节点
-		HeroNode res = findLastIndexNode(singleLinkedList.getHead(), 1);
-		System.out.println("倒数第" + 1 + "个\n" + res);
-		
-		//测试是否反转成功
-
+//		//测试修改节点的代码
+//		HeroNode newHeroNode = new HeroNode(2, "哈哈", "haha");
+//		singleLinkedList.update(newHeroNode);
+//		System.out.println("修改后的！");
+//		singleLinkedList.show();
+//		
+//		
+//		//测试删除节点的代码
+//		singleLinkedList.delete(2);
+//		System.out.println("删除后的！");
+//		singleLinkedList.show();
+//		
+//
+//		//测试求单链表中有效节点的个数
+//		System.out.println(getLength(singleLinkedList.getHead()));
+//		
+//		//测试是否得到倒数第k个节点
+//		HeroNode res = findLastIndexNode(singleLinkedList.getHead(), 1);
+//		System.out.println("倒数第" + 1 + "个\n" + res);
+//		
+//		// 测试链表反转
+//		reverseList(singleLinkedList.getHead());
+//		System.out.println("反转后的！");
+//		singleLinkedList.show();
+//
+//		// 逆序打印测试
+//		System.out.println("逆序打印");
+//		reversePrint(singleLinkedList.getHead());
 		
 	}
 	
@@ -113,11 +145,106 @@ public class SingleLinkedListDemo {
 	}
 	
 	//题三：反转链表
-	//思路
+	//思路：将原始链表的每个节点取出，依次放到新创建的链表reverseHead的最前端
+	//最后将head.next = reverseHead.next
 	//
+	public static void reverseList(HeroNode head) {
+		if(head.next == null || head.next.next == null) {
+			return;
+		}
+		
+		//定义一个辅助指针（变量），帮助遍历原来的链表
+		HeroNode temp = head.next;
+		HeroNode next = null;//指向temp的下一个节点
+		//定义一个新的链表头节点
+		HeroNode reverseHead = new HeroNode(0, "", "");
 
+		while(temp != null) {
+			next = temp.next;//先将当前节点的下一个节点保存起来
+			//头插法
+			temp.next = reverseHead.next;
+			reverseHead.next = temp;
+			temp = next;	
+		}
+		head.next = reverseHead.next;
+		
+	}
+	
+	//题四：逆序打印单链表
+	//利用栈这个数据结构，将各个节点压入栈中，然后利用先进后出的特点，逆序打印
+	public static void reversePrint(HeroNode head) {
+		if(head.next == null) {
+			return;
+		}
 
-
+		Stack<HeroNode> stack = new Stack<HeroNode>(); 
+		HeroNode temp = head.next;
+		while(temp != null) {//入栈
+			stack.push(temp);//push或者add
+			temp = temp.next;
+		}
+		while(stack.size() > 0) {//出栈
+			System.out.println(stack.pop());
+		}
+	
+		
+	}
+	
+	
+	//题五：合并两个有序的单链表，合并之后的链表依然有序(不会)
+//	public static HeroNode merge(HeroNode head1, HeroNode head2) {
+//		// 判断空链表
+//		if (head1.next == null) {
+//			return head2;
+//		}
+//		if (head2.next == null) {
+//			return head1;
+//		}
+//		// 将两个链表第一个节点比较，较小的节点给head
+//		HeroNode head = new HeroNode(0, "", "");
+//	       // 选出最小值作为合并后的新链表的头结点
+//        if(head1.next.no <= head2.next.no) {
+//            head.next = head1.next;
+//            // 后移节点
+//            head1 = head1.next;
+//        } else {
+//            head.next = head2.next;
+//            // 后移节点
+//            head2 = head2.next;
+//        }
+//		 //临时变量，用来链接合并链表的节点
+//		HeroNode temp = head;
+//		HeroNode next1 = null;
+//		HeroNode next2 = null;
+//		HeroNode next = null;
+//		
+//		
+//		while (head1.next != null && head2.next != null) {
+//			next1 = head1.next;
+//			next2 = head2.next;
+//			next = temp.next;
+//			
+//			if (head1.next.no >= head2.next.no) {
+//				temp.next = head2.next;
+//				head2 = next2;
+//			} else {
+//				temp.next = head1.next;
+//				head1 = next1;
+//			}
+//			temp = next;
+//
+//		}
+//
+//		if (head1.next == null) {
+//			temp.next = head2.next;
+//		}
+//		if (head2.next == null) {
+//			temp.next = head2.next;
+//		}
+//
+//		return head;
+//	}	
+	
 }	
 	
 	
@@ -200,7 +327,6 @@ public class SingleLinkedListDemo {
 				}
 				//输出节点信息
 				System.out.println(temp);	
-				System.out.println();
 				//将temp后移！
 				temp = temp.next;
 			}
