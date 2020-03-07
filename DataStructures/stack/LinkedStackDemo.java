@@ -2,38 +2,41 @@ package com.atguigu.stack;
 
 import java.util.Scanner;
 
+
 //链表模拟栈
+//思路：从最前面插入数据和从最前面取出数据
 class LinkedStack{
 
 	private int maxSize;// 栈的大小
-	private LinkedList linkedList;// 单链表模拟栈，数据就放在该单链表中
-	
+	LinkedList linkedList;// 单链表初始化
 	//构造器
 	public LinkedStack(int maxSize) {
 		this.maxSize = maxSize;
-		LinkedList linkedList = new LinkedList();// 单链表初始化
+		linkedList = new LinkedList();
 	}
 	// 栈满
 	public boolean isFull() {
-		return linkedList.getSize() == maxSize;
+		return linkedList.size == maxSize;
 	}
 	// 栈空
 	public boolean isEmpty() {
-		return linkedList.getSize() == 0;
+		return linkedList.size == 0;
 	}
 	
 	// 入栈——push
 	public void push(Number value) {
 		if(isFull()) {
 			System.out.println("栈满！");
+			return;
 		}
 		linkedList.add(value);
 	}
 	//出栈——pop,将栈顶的数据返回
 	public Number pop() {
-		if(linkedList.getSize() == 0) {
+		if(isEmpty()) {
 			throw new RuntimeException("栈空！");
 		}
+		
 		return linkedList.out();
 	}
 	//显示栈的情况(遍历),遍历时需要从栈顶开始显示数据
@@ -52,16 +55,8 @@ class LinkedStack{
 class LinkedList {
 	private Number head = new Number(-1);
 
-	private int size = 0;//表示链表长度
+	int size = 0;//表示链表长度
 	
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
-	}
-
 	public Number getHead() {
 		return head;
 	}
@@ -69,19 +64,15 @@ class LinkedList {
 	public void setHead(Number head) {
 		this.head = head;
 	}
-	//将数据添加到链表最后面的方法
+	//将数据添加到链表最前面的方法（头插法）
 	public void add(Number value) {
-		Number temp = head;
-		while(true) {
-			if(temp.getNext() == null) {
-				break;
-			}
-			temp.setNext(value);
-			size++;
-		}
+		value.setNext(head.getNext());
+		head.setNext(value);
+		size++;
 	}
-	//将head.next取出的方法
+	//将最前面数据取出的方法
 	public Number out() {
+
 		Number value = head.getNext();
 		head.setNext(head.getNext().getNext());
 		size--;
@@ -90,8 +81,14 @@ class LinkedList {
 	//显示数据的方法
 	public void show() {
 		Number temp = head.getNext();
-		while(temp != null) {
-			System.out.println(temp);
+		while(true) {
+			//判断是否到最后
+			if(temp == null) {
+				break;
+			}
+			//输出节点信息
+			System.out.println(temp);	
+			//将temp后移！
 			temp = temp.getNext();
 		}
 	}
