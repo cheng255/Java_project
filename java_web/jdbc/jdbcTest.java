@@ -24,15 +24,17 @@ public class jdbcTest {
         //1.读取配置信息
         Properties pros = new Properties();
         InputStream is = jdbcTest.class.getClassLoader().getResourceAsStream("jdbc.properties");
+        pros.load(is);
         String driverClass = pros.getProperty("driverClass");
         String user = pros.getProperty("user");
         String password = pros.getProperty("password");
         String url = pros.getProperty("url");
-        pros.load(is);
+
         //2.加载jdbc驱动
         Class.forName(driverClass);
         //3.连接数据库
         Connection conn = DriverManager.getConnection(url,user,password);
+        System.out.println(conn);
         Statement statement = conn.createStatement();
         String sql = "select stu.id 'id', stu.sn '学号', stu.name '姓名', " +
                 "cls.name '班级', cou.name '课程', sco.score '成绩'" +
@@ -42,7 +44,11 @@ public class jdbcTest {
                 "join course cou on sco.course_id = cou.id order by stu.id";
         //4.执行查询操作，并且处理结果集
         ResultSet resultSet = statement.executeQuery(sql);
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            int sn = resultSet.getInt("学号");
 
+        }
 
 
     }
