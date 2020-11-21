@@ -10,7 +10,6 @@ import java.util.Arrays;
 public class Man implements CharacterSuitable{
     int age;//年龄
     String name;//姓名
-    int sex;//性别
     double[] looks;//外貌三角模糊数
     double income;//收入分值
     double[] nineCharacterSuit;//对于9种性格的匹配度
@@ -41,15 +40,15 @@ public class Man implements CharacterSuitable{
         initCharacterSuits();
     }
 
-    public Man(int age, String name, double[] looks, double income, double[] nineCharacterSuit, double[] character, String[] hobby, int sex) {
+    public Man(int age, String name, double[] looks, double income, double[] character, String[] hobby) {
         this.age = age;
         this.name = name;
         this.looks = looks;
         this.income = income;
-        this.nineCharacterSuit = nineCharacterSuit;
         this.character = character;
         this.hobby = hobby;
-        this.sex = sex;
+        initCharacterSuits();
+        getNineCharacterSuit();//内部初始化该属性
     }
 
     /**
@@ -76,11 +75,7 @@ public class Man implements CharacterSuitable{
         return "Man{" +
                 "age=" + age +
                 ", name='" + name + '\'' +
-                ", sex=" + sex +
-                ", looks=" + Arrays.toString(looks) +
                 ", income=" + income +
-                ", nineCharacterSuit=" + Arrays.toString(nineCharacterSuit) +
-                ", character=" + Arrays.toString(character) +
                 ", hobby=" + Arrays.toString(hobby) +
                 '}';
     }
