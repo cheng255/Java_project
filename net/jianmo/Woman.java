@@ -1,7 +1,5 @@
 package com.cheng.jianmo;
 
-import java.util.Arrays;
-
 /**
  * @author nuonuo
  * @create 2020-11-19 21:23
@@ -47,17 +45,11 @@ public class Woman implements CharacterSuitable {
                 {100, 100, 70, 100, 70, 90, 70, 70, 80},
                 {90, 100, 80, 100, 70, 90, 80, 70, 80}
         };
-
     }
 
     @Override
     public String toString() {
-        return "Woman{" +
-                "age=" + age +
-                ", name='" + name + '\'' +
-                ", income=" + income +
-                ", hobby=" + Arrays.toString(hobby) +
-                '}';
+        return name + "\t" + age;
     }
 
     /**

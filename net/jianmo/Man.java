@@ -1,7 +1,5 @@
 package com.cheng.jianmo;
 
-import java.util.Arrays;
-
 /**
  * 男生
  * @author nuonuo
@@ -33,7 +31,6 @@ public class Man implements CharacterSuitable{
                 {70,70,70,70,100,100,90,80,100},
                 {80,70,90,70,80,90,90,80,90}
         };
-
     }
 
     public Man() {
@@ -72,11 +69,6 @@ public class Man implements CharacterSuitable{
 
     @Override
     public String toString() {
-        return "Man{" +
-                "age=" + age +
-                ", name='" + name + '\'' +
-                ", income=" + income +
-                ", hobby=" + Arrays.toString(hobby) +
-                '}';
+        return name + "\t" + age;
     }
 }

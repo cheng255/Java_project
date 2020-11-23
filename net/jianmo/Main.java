@@ -24,13 +24,22 @@ public class Main {
     public static void main(String[] args) {
         init();
         //匹配的权值分配
-        Man man = manList.get(0);
-        double[] weight = new double[]{0.1, 0.5, 0.2, 0.2};
+        Man man = manList.get(30);
+        System.out.println("以" + man.name  + "客户举例");
+//        0 0 0.167
+        double[] weight = new double[]{0.5, 0.1, 0.3, 0.1};
+        System.out.println("该客户选择的权重为" + Arrays.toString(weight));
         HashMap<Woman, Double> match = match(man, weight, womanList);//按照匹配分数排序后的异性列表
         //遍历
+        System.out.println("为" + man.name + "匹配到的前20名异性为");
+        System.out.println("name\tage\tsuitability");
         Set<Map.Entry<Woman, Double>> entries = match.entrySet();
+        int s = 0;
         for (Map.Entry<Woman, Double> entry : entries) {
-            System.out.println(entry);
+            if ((s++) >= 20) {
+                break;
+            }
+            System.out.println(entry.getKey() + "\t" + String.format("%.2f", entry.getValue()));
         }
 
     }
@@ -40,7 +49,6 @@ public class Main {
         initManList();
         initWomanList();
     }
-
 
     /**
      * 匹配度算法 （男）
@@ -55,16 +63,19 @@ public class Main {
         for (Woman wm : womanList) {
             //1.外貌三角模糊数 -> 外貌契合度
             double a = getLooksMatch(m.looks, wm.looks) * weight[0];
-
+//            System.out.println(a);
             //2.收入分值 -> 收入契合度  （默契度 b = 1 - (B - B1) / (B + B1)）
             double b = getIncomeMatch(m.income, wm.income) * weight[1];
-
+//            System.out.println(b);
             //3.对于9种性格的匹配度  +  异性性格分布 -> 性格匹配度
             double c = getCharacterMatch(m.nineCharacterSuit, wm.character) * weight[2];
+//            System.out.println(c);
             //4.爱好列表 -> 爱好匹配度
             double d = getHobbyMatch(m.hobby, wm.hobby) * weight[3];
+//            System.out.println(d);
             //5.最终的契合度
             double finalMatch = a + b + c + d;
+//            System.out.println(finalMatch);
             if (Math.abs(wm.age - m.age) > AGE_DIFFERENCE) {//如果年龄超过AGE_DIFFERENCE限制，就不给与匹配
                 matchs.put(wm, 0.0);
             } else {
@@ -192,7 +203,7 @@ public class Main {
      * @return 收入的契合度
      */
     private static double getIncomeMatch(double m, double wm) {
-        double res = 1 - Math.abs(m - wm) / (m + wm);
+        double res = 1 - Math.abs(m - wm) / 100;
         return res * 100;
     }
 
@@ -205,8 +216,8 @@ public class Main {
      */
     private static double getLooksMatch(double[] m, double[] wm) {
         double res = Math.pow((m[0] - wm[0]), 2) + Math.pow((m[1] - wm[1]), 2) + Math.pow((m[2] - wm[2]), 2);
-        res = Math.sqrt(Math.pow(res, 2) / 3);
-        return res * 100;
+        res = Math.sqrt(res / 3);
+        return (1-(res / 0.892)) * 100;
     }
 
 
