@@ -5,10 +5,13 @@
     <title>登录</title>
 </head>
 <body>
-    <form method="post" action="http://localhost:8080/maven_test/login">
-        <input type="text" name="username" placeholder="请输入用户名">
-        <input type="password" name="password" placeholder="请输入密码">
-        <input type="submit" value="提交">
+    <hr><!-- 分割线 -->
+    <form method="post" action="login">
+        <!-- name表示请求数据的键 -->
+        用户名：<input type="text" name="username"><br>
+        密码：<input type="password" name="password"><br>
+        <input type="submit" value="登录">
     </form>
+    <hr>
 </body>
 </html>

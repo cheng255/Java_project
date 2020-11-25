@@ -31,19 +31,21 @@ public class LoginServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");//设置请求体编码
         resp.setCharacterEncoding("UTF-8");//设置响应体编码
         resp.setContentType("text/html");
-
         //解析数据
         //req.getParameter方法获取请求数据：url和请求体，数据格式为k1=v1&k2=v2
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        System.out.printf("=================用户名（%s） 密码（%s）\n", username, password);
-
-        //返回相应数据
-        PrintWriter writer = resp.getWriter();//response获取io输出流
-        writer.println("登录成功");
-        writer.println("<h3欢迎你" + username + "</h3>");
-        writer.flush();//有缓冲的io操作，需要刷新缓冲区数据，保证发送数据
-        writer.close();//关闭流资源
+        String u = req.getParameter("username");
+        String p = req.getParameter("password");
+        System.out.printf("=================用户名（%s） 密码（%s）\n", u, p);
+        if ("abc".equals(u) && "123".equals(p)) {
+            //重定向：http响应状态码设置为301/302/307，响应头location
+            resp.sendRedirect("home.html");
+        } else {
+            PrintWriter writer = resp.getWriter();//response获取io输出流
+            writer.println("登录失败");
+            writer.println("<h3>用户名：" + u + "或密码错误</h3>");
+            writer.flush();//有缓冲的io操作，需要刷新缓冲区数据，保证发送数据
+            writer.close();//关闭流资源
+        }
 
     }
 }
