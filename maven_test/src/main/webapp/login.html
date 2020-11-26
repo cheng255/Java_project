@@ -3,15 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
+    <script src="js/jquery@3.3.1/jquery.js" type="text/javascript"></script>
+    <script>
+        $(function () { //页面加载完开始执行
+            $("#loginButton").click((function () {//给按钮绑定点击事件
+                $.ajax({
+                    type: "post",
+                    url: "login01",
+                    dataType: "json",//响应体中的数据类型
+                    data: {
+                        username: $("#username").val(),
+                        password: $("#password").val()
+                    },
+                    success(r) {
+                        if (r.success) {
+                            //响应成功
+                            $("#login1").hide();//响应成功表示登录成功，就将登录模块隐藏
+                        } else {
+                            //相应失败
+                            alert("用户名或密码错误");
+                        }
+                    }
+                })
+            }))
+        })
+    </script>
 </head>
 <body>
     <hr><!-- 分割线 -->
-    <form method="post" action="login">
+    <div id="login1">
         <!-- name表示请求数据的键 -->
-        用户名：<input type="text" name="username"><br>
-        密码：<input type="password" name="password"><br>
-        <input type="submit" value="登录">
-    </form>
+        用户名：<input type="text" id="username"><br>
+        密码：<input type="password" id="password"><br>
+        <input type="button" value="登录" id="loginButton">
+    </div>
     <hr>
+
+    <p>欢迎来到本网页</p>
+
 </body>
 </html>

@@ -39,6 +39,8 @@ public class LoginServlet extends HttpServlet {
         if ("abc".equals(u) && "123".equals(p)) {
             //重定向：http响应状态码设置为301/302/307，响应头location
             resp.sendRedirect("home.html");
+        } else if ("abc".equals(u)) {
+            req.getRequestDispatcher("home.html").forward(req,resp);
         } else {
             PrintWriter writer = resp.getWriter();//response获取io输出流
             writer.println("登录失败");
