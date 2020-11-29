@@ -32,11 +32,14 @@ public class sensitiveSevlet extends HttpServlet {
         //现在的方式是每次访问敏感资源都获取session对象，然后验证是否为null
         //真实开发会采取filter过滤器，统一处理敏感资源验证
         if (session == null) {
+            resp.setStatus(401);//没有登录 访问敏感资源 返回401
             writer.println("访问失败，请登录后重试");
         } else {
             String username = (String) session.getAttribute("username");
             System.out.println(username);
             writer.println("访问成功");
+
+            //如果有禁止访问的敏感资源，无权限 返回403
         }
 
 
