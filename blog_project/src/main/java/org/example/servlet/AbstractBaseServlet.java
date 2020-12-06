@@ -32,19 +32,19 @@ public abstract class AbstractBaseServlet extends HttpServlet {
         //TODO
 
         JSONResponse json = new JSONResponse();
-        try{
+        try {
             //调用子类重写的方法
             Object data = process(req, resp);
             //子类的process方法执行完没有抛异常，表示业务执行成功
             json.setSuccess(true);
             json.setData(data);
-        }catch(Exception e){
+        } catch (Exception e) {
             //异常如何处理？JDBC的异常SQLException，JSON处理的异常，自定义异常返回错误消息
             e.printStackTrace();
             //json.setSuccess(false)不用设置了，因为new的时候就是
             String code = "UNKNOWN";
             String s = "未知的错误";
-            if(e instanceof AppException){
+            if (e instanceof AppException) {
                 code = ((AppException) e).getCode();
                 s = e.getMessage();
             }
