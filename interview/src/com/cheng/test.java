@@ -97,5 +97,29 @@ public class test {
         System.out.println(b);
 //        new StringBuilder()
     }
+    @Test
+    public void test4() {
+        byte[] src = new byte[0],dst;
+//        dst = new String(src,"GBC").getBytes("UTF-8");
+        //10.foreach 用break跳出循环
+        int[] arr = new int[7];
 
+        byte b1 = 1, b2 = 2, b3, b6;
+        final byte b4 = 4, b5 = 6;
+        b6 = b4 + b5;
+        b3 = (byte) (b1 + b2); //11.+运算时，byte还是按int计算，实际上byte也是按int存储
+
+
+        String s1 = "abc";
+        String s2 = "a" + new String("bc");
+        System.err.println(s1 == s2); //false
+    }
+
+    @Test
+    public void test5() {
+//        test01.s;//12.在接口中的变量都默认是public static final的全局常量，可以省略前述的修饰词，可以被实现了接口的类直接访问并调用
+
+//        Arrays.copyOf()
+//        clone()
+    }
 }
