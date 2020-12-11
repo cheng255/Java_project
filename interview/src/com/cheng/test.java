@@ -121,5 +121,15 @@ public class test {
 
 //        Arrays.copyOf()
 //        clone()
+        int i = 5;
+        int s = (i++) + (++i) + (i--) + (--i);
+//                 7      6     6    5
+        System.out.println(s);//24
+
+
     }
+    //13.abstract final不能同时表述class
+//    abstract final class T {
+//
+//    }
 }
