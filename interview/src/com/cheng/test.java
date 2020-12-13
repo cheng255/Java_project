@@ -132,4 +132,7 @@ public class test {
 //    abstract final class T {
 //
 //    }
+    class T1 {
+
+    }
 }
