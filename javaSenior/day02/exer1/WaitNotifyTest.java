@@ -38,23 +38,22 @@ public class WaitNotifyTest {
         public void run() {
             while (true) {
                 try {
-                    synchronized (Producer.class) {
                         synchronized (WaitNotifyTest.class) {
                             if (time == 0) {
                                 //生产者生产次数用完
-                                WaitNotifyTest.class.notifyAll();
                                 break;
                             }
-                            time--;
-                            Thread.sleep(100);
-                            count += PRODUCER_frequency;
-                            System.out.println(Thread.currentThread().getName() + "生产了一个面包,剩余" + count);
-                            WaitNotifyTest.class.notifyAll();
                             if (count >= 15) {
                                 WaitNotifyTest.class.wait();
+                            } else {
+                                time--;
+                                Thread.sleep(100);
+                                count += PRODUCER_frequency;
+                                System.out.println(Thread.currentThread().getName() + "生产了一个面包,剩余" + count);
+                                WaitNotifyTest.class.notifyAll();
                             }
+
                         }
-                    }
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -70,22 +69,21 @@ public class WaitNotifyTest {
         public void run() {
             while (true) {
                 try {
-                    synchronized (Consumer.class) {
                         synchronized (WaitNotifyTest.class) {
                             if (bs >= BREAK_SUM) {
                                 break;
                             }
-                            Thread.sleep(100);
-                            count--;
-                            bs++;
-                            System.out.println(bs);
-                            System.out.println(Thread.currentThread().getName() + "购买了一个面包，剩余" + count);
-                            if (count <= 0 && bs < BREAK_SUM) {
-                                WaitNotifyTest.class.notifyAll();
+                            if (count <= 0) {
                                 WaitNotifyTest.class.wait();
+                            } else {
+                                Thread.sleep(100);
+                                count--;
+                                bs++;
+//                                System.out.println(bs);
+                                System.out.println(Thread.currentThread().getName() + "购买了一个面包，剩余" + count);
+                                WaitNotifyTest.class.notifyAll();
                             }
                         }
-                    }
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

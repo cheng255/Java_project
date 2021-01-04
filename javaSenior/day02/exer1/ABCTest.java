@@ -3,6 +3,22 @@ package com.atguigu.exer1;
 /**
  * 三个线程   分别打印ABC   按照ABC顺序打印十次
  *
+ * 总结：多线程通信推荐写法
+ *
+ *             for/while循环 {
+ *
+ *                synchronized(Object o) {
+ *                    while(不满足该线程执行条件){
+ *                        o.wait();
+ *                    }
+ *                    //满足执行条件
+ *                    //....执行业务
+ *                    o.notifyAll();
+ *                }
+ *
+ *
+ *             }
+ *
  * @author nuonuo
  * @create 2021-01-02 11:46
  */
@@ -32,7 +48,6 @@ public class ABCTest {
                 synchronized (ABCTest.class) {
                     while (letter != flag) {
                         try {
-                            ABCTest.class.notifyAll();
                             ABCTest.class.wait();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
