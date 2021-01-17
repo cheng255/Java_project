@@ -1,9 +1,6 @@
 package com.atguigu.exer1;
 
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * 线程池
@@ -25,7 +22,7 @@ public class ThreadPoolExecutorTest {
                             public void run() {
                                 System.out.println(Thread.currentThread().getName()+"开始执行了");
                                 //r对象是线程池内部封装过的工作任务类（Worker），会一直循环等待的方式从阻塞队列中取任务来执行
-                                r.run();
+//                                r.run();
                             }
                         });
                     }
@@ -55,5 +52,26 @@ public class ThreadPoolExecutorTest {
             });
         }
 //        pool.shutdown();
+
+        //线程池的4个快速创建方式 （实际工作中不使用   面试要了解）
+        //实际工作需要使用ThreadPoolExecutor  构造参数自己指定  更加灵活
+        ExecutorService pool2 = Executors.newSingleThreadExecutor();//单线程池
+        ExecutorService pool3 = Executors.newCachedThreadPool();//缓存的线程池
+        ExecutorService pool5 = Executors.newFixedThreadPool(3);//固定大小线程池
+        ScheduledExecutorService pool4 = Executors.newScheduledThreadPool(4);//计划任务线程池
+        pool4.schedule(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(1);
+            }
+        }, 2, TimeUnit.SECONDS);
+
+        pool4.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(2);
+            }
+        }, 2, 1, TimeUnit.SECONDS);
     }
+
 }
