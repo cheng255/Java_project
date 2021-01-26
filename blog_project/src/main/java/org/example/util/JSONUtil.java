@@ -7,8 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * JSON数据的反序列化和序列化
  * @author nuonuo
- * @create 2020-11-30 12:46
+ * @create 2021-01-03 13:28
  */
 public class JSONUtil {
 
