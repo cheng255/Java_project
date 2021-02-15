@@ -1,8 +1,6 @@
 package com.cheng.socket;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,6 +14,7 @@ public class TcpServer {
         Socket socket = null;
         InputStream is = null;
         ByteArrayOutputStream baos = null;
+        FileOutputStream fos = null;
         try {
             //1.服务器地址 要监控的端口号
             serverSocket = new ServerSocket(9090);
@@ -28,15 +27,29 @@ public class TcpServer {
                 baos = new ByteArrayOutputStream();
                 byte[] buffer = new byte[1024];
                 int len;
-                while ((len = is.read(buffer)) != -1) {
-                    baos.write(buffer, 0, len);
-                }
+//                while ((len = is.read(buffer)) != -1) {
+//                    baos.write(buffer, 0, len);
+//                }
+//                System.out.println(baos.toString());
+                len = is.read();
+                is.read(buffer, 0, len);
+                baos.write(buffer);
                 System.out.println(baos.toString());
+                //接收文件
+                fos = new FileOutputStream(new File("net/receive.jpg"));
+                while ((len = is.read(buffer)) != -1) {
+                    fos.write(buffer, 0, len);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             //5.关闭资源
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (baos != null) {
                 try {
                     baos.close();

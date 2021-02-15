@@ -1,5 +1,7 @@
 package com.cheng.socket;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
@@ -15,6 +17,7 @@ public class TcpClient {
         Socket socket = null;
         OutputStream os = null;
         Scanner scan = null;
+        FileInputStream fis = null;
         try {
             //1.ip地址
             InetAddress serverIP = InetAddress.getByName("localhost");
@@ -22,13 +25,28 @@ public class TcpClient {
             int port = 9090;
             //3.创建socket连接
             socket = new Socket(serverIP, port);
-            //发送消息
+            //4.发送消息
             os = socket.getOutputStream();
-            scan = new Scanner(System.in);
-            os.write("连接成功".getBytes());
+            String message = "连接成功";
+            os.write(message.getBytes().length);
+            os.write(message.getBytes());
+
+            //上传文件
+            fis = new FileInputStream(new File("net/beautiful.jpg"));
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = fis.read(buffer)) != -1) {
+                os.write(buffer, 0, len);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            try {
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (os != null) {
                 try {
                     os.close();
