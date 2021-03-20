@@ -8,5 +8,6 @@ public class synchronizedTest {
     public static void main(String[] args) {
         StringBuffer sb = new StringBuffer("abc");
         sb.append("d").append("e").append("f");
+
     }
 }
